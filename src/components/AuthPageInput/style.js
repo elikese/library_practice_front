@@ -23,7 +23,7 @@ export const input = css`
 `;
 
 export const messageBox = (type) => css`
-    padding: 5px 10px;
+    padding: ${type === "error" ? "5px 10px" : 0};
     width: 100%;
     color: ${type === "error" ? "#ff6161" : "#29df4aff"};
     font-size: 11px;
