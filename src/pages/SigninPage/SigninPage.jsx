@@ -4,15 +4,30 @@ import { useInput } from "../../hooks/useInput";
 import RightTopButton from "../../components/RightTopButton/RightTopButton";
 import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
 import { Link } from "react-router-dom";
+import { signupRequest } from "../../apis/api/signup";
 
 function SigninPage() {
   const [username, usernameChange] = useInput();
   const [password, passwordChange] = useInput();
+
+  const handleSigninSubmit = () => {
+    signupRequest({
+      username,
+      password
+    }).then(response => {
+      const accessToken = response.data;
+      localStorage.setItem("AccessToken", accessToken);
+      window.location.replace("/");
+    }).catch(error => {
+      alert(error.response.data);
+    });
+  }
+
   return (
     <>
       <div css={s.header}>
         <h1>로그인</h1>
-        <RightTopButton onClick={null}>로그인하기</RightTopButton>
+        <RightTopButton onClick={handleSigninSubmit}>로그인하기</RightTopButton>
       </div>
       <AuthPageInput type={"text"} name={"username"} placeholder={"아이디"} value={username} onChange={usernameChange} />
       <AuthPageInput type={"password"} name={"password"} placeholder={"비밀번호"} value={password} onChange={passwordChange} />
