@@ -4,22 +4,22 @@ import { useInput } from "../../hooks/useInput";
 import RightTopButton from "../../components/RightTopButton/RightTopButton";
 import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
 import { Link } from "react-router-dom";
-import { signupRequest } from "../../apis/api/signup";
+import { signinRequest } from "../../apis/api/signin";
 
 function SigninPage() {
   const [username, usernameChange] = useInput();
   const [password, passwordChange] = useInput();
 
   const handleSigninSubmit = () => {
-    signupRequest({
+    signinRequest({
       username,
       password
     }).then(response => {
-      const accessToken = response.data;
+      const accessToken = response?.data;
       localStorage.setItem("AccessToken", accessToken);
       window.location.replace("/");
     }).catch(error => {
-      alert(error.response.data);
+      alert(error.response?.data);
     });
   }
 
