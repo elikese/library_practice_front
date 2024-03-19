@@ -6,6 +6,8 @@ import HomePage from "../pages/HomePage/HomePage";
 import { getPrincipalRequest } from '../apis/api/principal';
 import RootSideMenuLeft from '../components/RootSideMenuLeft/RootSideMenuLeft copy';
 import RootHeader from '../components/RootHeader/RootHeader';
+import { GridLoader } from 'react-spinners';
+import FullSizeLoader from '../components/FullSizeLoader/FullSizeLoader';
 
 
 // useQuery => GET 요청시 사용
@@ -42,7 +44,7 @@ function AuthRoute(props) {
       <RootHeader />
       {
         PrincipalQuery.isLoading
-          ? <h1>로딩중...</h1>
+          ? <FullSizeLoader />
           : <Routes>
             <Route path='auth/*' element={<AuthPage />}></Route>
             <Route path='/' element={<HomePage />}></Route>
