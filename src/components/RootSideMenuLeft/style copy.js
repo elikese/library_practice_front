@@ -117,12 +117,7 @@ export const usernameAndEmail = css`
         font-size: 12px;
     }
 `;
-export const d = css`
 
-`;
-export const g = css`
-
-`;
 export const menuList = css`
 
 `;

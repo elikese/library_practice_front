@@ -52,7 +52,7 @@ function RootHeader() {
                             <button css={s.logout} onClick={handleLogoutClick}>
                                 <FiLogOut />
                             </button>
-                            <Link css={s.account} to={"/auth/mypage"}>
+                            <Link css={s.account} to={"/account/mypage"}>
                                 <FiUser />
                             </Link>
                         </div>
