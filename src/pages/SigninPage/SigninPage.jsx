@@ -5,6 +5,7 @@ import RightTopButton from "../../components/RightTopButton/RightTopButton";
 import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
 import { Link } from "react-router-dom";
 import { signinRequest } from "../../apis/api/signin";
+import React from "react";
 
 function SigninPage() {
   const [username, usernameChange] = useInput();
@@ -22,6 +23,12 @@ function SigninPage() {
       alert(error.response?.data);
     });
   }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSigninSubmit();
+    }
+  };
 
   return (
     <>

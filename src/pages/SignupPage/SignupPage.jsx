@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import axios from "axios";
 import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
 import RightTopButton from "../../components/RightTopButton/RightTopButton";
 import { useInput } from "../../hooks/useInput";
@@ -83,7 +82,7 @@ function SignupPage(props) {
         alert("회원가입이 실패하였습니다");
       };
     });
-    
+
   }
 
   return (
