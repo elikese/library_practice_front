@@ -6,16 +6,18 @@ export const layout = css`
     width: 100%;
     height: 100%;
 `;
+
 export const header = css`
     box-sizing: border-box;
     display: flex;
     border: 1px solid #dbdbdb;
     border-radius: 3px;
-    padding: 10px;
+    padding: 10px 30px;
     width: 100%;
     height: 200px;
     background-color: white;
 `;
+
 export const bottom = css`
     box-sizing: border-box;
     display: flex;
@@ -26,6 +28,7 @@ export const bottom = css`
     height: 200px;
     background-color: white;
 `;
+
 export const imgBox = css`
     box-sizing: border-box;
     display: flex;
@@ -52,14 +55,60 @@ export const profileImg = css`
     }
 `;
 export const infoBox = css`
-    
+    box-sizing: border-box;
+    margin-left: 30px;
+    padding-top: 30px;
 `;
+
 export const infoText = css`
+    font-size: 14px;
+    margin-bottom: 10px;
+`;
+
+export const emailBox = css`
+    display: flex;
+    align-items: center;
+    & > div {
+        margin: 0;
+    }
+    margin-bottom: 10px;
+`;
+export const infoButton = css`
+    box-sizing: border-box;
+    margin-left: 10px;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    padding: 5px;
+    background-color: white;
+    font-size: 12px;
+    cursor: pointer;
+
+    &:hover{
+        background-color: #fafafa;
+    }
+    &:active{
+        background-color: #eeeeee;
+    }
+`;
+export const a = css`
+    box-sizing: border-box;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    padding: 5px;
+    background-color: white;
+    font-size: 12px;
+    cursor: pointer;
+
+    &:hover{
+        background-color: #fafafa;
+    }
+    &:active{
+        background-color: #eeeeee;
+    }
+`;
+export const b = css`
     
 `;
-export const f = css`
-    
-`;
-export const g = css`
+export const c = css`
     
 `;

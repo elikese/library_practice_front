@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { useRef } from "react";
 import * as s from "./style";
+import { useQueryClient } from "react-query";
+import { FiUserCheck } from "react-icons/fi";
 
-function MyPage(props) {
-
+function MyPage() {
     const fileRef = useRef();
-
+    const queryClient = useQueryClient();
+    const principalData = queryClient.getQueryData("PrincipalQuery");
 
     return (
         <div css={s.layout}>
@@ -17,13 +19,21 @@ function MyPage(props) {
                     </div>
                 </div>
                 <div css={s.infoBox}>
-                    <div css={s.infoText}></div>
-                    <div css={s.infoText}></div>
-                    <div>
-                        <div css={s.infoText}></div>
-                        <button>버튼임</button>
+                    <div css={s.infoText}>사용자이름: {principalData.data.username}</div>
+                    <div css={s.infoText}>이름: {principalData.data.name}</div>
+                    <div css={s.emailBox}>
+                        <div css={s.infoText}>이메일: {principalData.data.email}</div>
+                        {
+                            principalData.data.authorities.filter(auth => auth.authority === "ROLE_USER").length === 0
+                                ? <button css={s.infoButton}>인증하기</button>
+                                : "　✅인증완료"
+                        }
+
                     </div>
-                    <div></div>
+                    <div>
+                        <button>정보 수정</button>
+                        <button>비밀번호 수정</button>
+                    </div>
                 </div>
             </div>
             <div css={s.bottom}>

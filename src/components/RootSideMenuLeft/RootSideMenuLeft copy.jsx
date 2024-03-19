@@ -61,7 +61,10 @@ function RootSideMenuLeft() {
                     </div>
                     :
                     <>
-                        <div css={s.settings}>
+                        <div css={s.settings} onClick={() => {
+                            navigate("/account/mypage");
+                            setShow(() => false);
+                        }}>
                             <FiSettings />
                         </div>
                         <div css={s.profileBox}>
