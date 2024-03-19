@@ -20,7 +20,8 @@ function RootHeader() {
     }, [principalQueryState.status]);
 
 
-    const handleOpenClick = () => {
+    const handleOpenClick = (e) => {
+        e.stopPropagation();
         setShow(() => true);
     }
 

@@ -21,7 +21,6 @@ function RootSideMenuLeft() {
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("PrincipalQuery");
 
-
     useEffect(() => {
         setLogin(() => principalQueryState.status === "success");
         const data = principalQueryState?.data?.data;
@@ -40,13 +39,8 @@ function RootSideMenuLeft() {
         setShow(() => false);
     }
 
-    const handleLoginClick = () => {
-        setShow(() => false);
-        navigate("/auth/signin");
-    }
-
     return (
-        <div css={s.layout(show)}>
+        <div css={s.layout(show)} onClick={(e) => { e.stopPropagation(); }}>
             <div css={s.header}>
                 <button css={s.menuButton} onClick={handleCloseClick}>
                     <HiMenu />
@@ -56,8 +50,14 @@ function RootSideMenuLeft() {
                 {!isLogin
                     ?
                     <div css={s.authButtons}>
-                        <button>로그인</button>
-                        <button>회원가입</button>
+                        <button onClick={() => {
+                            navigate("/auth/signin");
+                            setShow(() => false);
+                        }}>로그인</button>
+                        <button onClick={() => {
+                            navigate("/auth/signup");
+                            setShow(() => false);
+                        }}>회원가입</button>
                     </div>
                     :
                     <>
