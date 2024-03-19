@@ -38,72 +38,93 @@ export const menuButton = css`
 `;
 
 export const profile = css`
-    position: relative;
+    box-sizing: border-box;
+    border-bottom: 1px solid #dbdbdb;
+    width: 100%;
+    height: 150px;
+`;
+
+export const authButtons = css`
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    border-bottom: 1px solid #dbdbdb;
+    padding: 20px;
     width: 100%;
-    height: 150px;
+    height: 100%;
+
+    & > button {
+        box-sizing: border-box;
+        margin-bottom: 3px;
+        border: 1px solid #dbdbdb;
+        border-radius: 3px;
+        padding: 5px;
+        background-color: white;
+        font-weight: 600;
+        cursor: pointer;
+
+        &:hover{
+            background-color: #fafafa;
+        }
+
+        &:active{
+            background-color: #eeeeee;
+        }
+    }
 `;
 
-export const userImgBox = css`
+export const settings = css`
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 80px;
-    height: 80px;
-    font-size: 40px;
-    border: 1px solid #dbdbdb;
-    border-radius: 50%;
+    justify-content: flex-end;
+    padding: 5px 10px;
+
+    & > * {
+        padding: 5px;
+        cursor: pointer;
+    }
+
 `;
 
-export const settingBtn = css`
+export const profileBox = css`
     display: flex;
-    align-items: center;
     justify-content: center;
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    width: 25px;
-    height: 25px;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
+    align-items: center;
+    width: 100%;
 `;
 
-export const menuList = css`
-
-`;
-
-export const loginbuttonBox = css`
+export const profileImg = css`
     box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 150px;
-
-    & > button {
+    border: 1px solid #dbdbdb;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    background-color: white;
+`;
+export const usernameAndEmail = css`
     display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    border-bottom: 1px solid #dbdbdb;
-    padding: 0px 20px;
-    height: 40px;
-    width: 100%;
-    background-color: #fdfdfd;
-    color: #222222;
-        cursor: pointer;
-        & > h1 {
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-        }
+    flex-direction: column;
+    margin-left: 10px;
+    cursor: default;
+
+    & > span:nth-of-type(1) {
+        font-weight: 600;
     }
+
+    & > span:nth-of-type(2) {
+        font-size: 12px;
+    }
+`;
+export const d = css`
+
+`;
+export const g = css`
+
+`;
+export const menuList = css`
+
 `;
 
 export const menuLink = css`
@@ -120,11 +141,3 @@ export const menuLink = css`
     color: #222222;
 `;
 
-export const profileTextBox = css`
-    cursor: default;
-    border-bottom: 1px solid #dbdbdb;
-    padding: 2px 5px;
-    font-size: 14px;
-    font-weight: 400;
-    text-decoration: none;
-`;

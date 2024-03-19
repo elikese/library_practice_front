@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useRecoilState } from "recoil";
-import * as s from "./style";
+import * as s from "./style copy";
 import { HiMenu } from "react-icons/hi";
 import { loginState, menuState } from "../../atoms/menuAtom";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,18 +11,20 @@ import { FiUser, FiSettings } from "react-icons/fi";
 function RootSideMenuLeft() {
     const [show, setShow] = useRecoilState(menuState);
     const [isLogin, setLogin] = useRecoilState(loginState);
+
     const navigate = useNavigate();
     const [user, setUser] = useState({
         username: "",
         userEmail: ""
     })
+
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("PrincipalQuery");
 
 
     useEffect(() => {
         setLogin(() => principalQueryState.status === "success");
-        const data = queryClient.getQueryData("PrincipalQuery")?.data;
+        const data = principalQueryState?.data?.data;
         setUser(() => {
             return (
                 {
@@ -42,6 +44,7 @@ function RootSideMenuLeft() {
         setShow(() => false);
         navigate("/auth/signin");
     }
+
     return (
         <div css={s.layout(show)}>
             <div css={s.header}>
@@ -49,22 +52,30 @@ function RootSideMenuLeft() {
                     <HiMenu />
                 </button>
             </div>
-            {
-                isLogin
+            <div css={s.profile}>
+                {!isLogin
                     ?
-                    <div css={s.profile}>
-                        <button css={s.settingBtn}><FiSettings /></button>
-                        <div css={s.userImgBox}>
-                            <FiUser />
-                        </div>
-                        <div css={s.profileTextBox}>{user.username}</div>
-                        <div css={s.profileTextBox}>{user.userEmail}</div>
+                    <div css={s.authButtons}>
+                        <button>로그인</button>
+                        <button>회원가입</button>
                     </div>
                     :
-                    <div css={s.loginbuttonBox}>
-                        <button onClick={handleLoginClick}><h1>로그인하기</h1></button>
-                    </div>
-            }
+                    <>
+                        <div css={s.settings}>
+                            <FiSettings />
+                        </div>
+                        <div css={s.profileBox}>
+                            <div css={s.profileImg}>
+                                <FiUser />
+                            </div>
+                            <div css={s.usernameAndEmail}>
+                                <span>{user.username}</span>
+                                <span>{user.userEmail}</span>
+                            </div>
+                        </div>
+                    </>
+                }
+            </div>
             <div css={s.menuList}>
                 <Link css={s.menuLink}>
                     도서 검색

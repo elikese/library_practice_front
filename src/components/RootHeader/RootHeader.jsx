@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import * as s from "./style";
 import { HiMenu } from "react-icons/hi";
 import { FiUser, FiLogOut } from "react-icons/fi";
-import { menuState } from "../../atoms/menuAtom";
+import { loginState, menuState } from "../../atoms/menuAtom";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useQueryClient } from "react-query";
@@ -11,7 +11,7 @@ import instance from "../../apis/utils/instance";
 
 function RootHeader() {
     const [show, setShow] = useRecoilState(menuState);
-    const [isLogin, setLogin] = useState(false);
+    const [isLogin, setLogin] = useRecoilState(loginState);
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("PrincipalQuery");
 
@@ -32,6 +32,7 @@ function RootHeader() {
         });
         queryClient.refetchQueries("PrincipalQuery");
     }
+
 
     return (
         <div css={s.header}>

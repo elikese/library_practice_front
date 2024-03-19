@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import AuthPage from "../pages/Authpage/AuthPage";
 import HomePage from "../pages/HomePage/HomePage";
 import { getPrincipalRequest } from '../apis/api/principal';
-import RootSideMenuLeft from '../components/RootSideMenuLeft/RootSideMenuLeft';
+import RootSideMenuLeft from '../components/RootSideMenuLeft/RootSideMenuLeft copy';
 import RootHeader from '../components/RootHeader/RootHeader';
 
 
