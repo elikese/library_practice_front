@@ -11,12 +11,16 @@ import { FiUser, FiSettings } from "react-icons/fi";
 function RootSideMenuLeft() {
     const [show, setShow] = useRecoilState(menuState);
     const [isLogin, setLogin] = useRecoilState(loginState);
-
     const navigate = useNavigate();
     const [user, setUser] = useState({
         username: "",
         userEmail: ""
     })
+
+    const handleMenuClick = (url) => {
+        navigate(url);
+        setShow(() => false);
+    }
 
     const queryClient = useQueryClient();
     const principalQueryState = queryClient.getQueryState("PrincipalQuery");
@@ -33,16 +37,14 @@ function RootSideMenuLeft() {
             );
         });
 
+
     }, [principalQueryState.status]);
 
-    const handleCloseClick = () => {
-        setShow(() => false);
-    }
 
     return (
         <div css={s.layout(show)} onClick={(e) => { e.stopPropagation(); }}>
             <div css={s.header}>
-                <button css={s.menuButton} onClick={handleCloseClick}>
+                <button css={s.menuButton} onClick={() => setShow(() => false)}>
                     <HiMenu />
                 </button>
             </div>
@@ -50,21 +52,12 @@ function RootSideMenuLeft() {
                 {!isLogin
                     ?
                     <div css={s.authButtons}>
-                        <button onClick={() => {
-                            navigate("/auth/signin");
-                            setShow(() => false);
-                        }}>로그인</button>
-                        <button onClick={() => {
-                            navigate("/auth/signup");
-                            setShow(() => false);
-                        }}>회원가입</button>
+                        <button onClick={() => handleMenuClick("/auth/signin")}>로그인</button>
+                        <button onClick={() => handleMenuClick("/auth/signup")}>회원가입</button>
                     </div>
                     :
                     <>
-                        <div css={s.settings} onClick={() => {
-                            navigate("/account/mypage");
-                            setShow(() => false);
-                        }}>
+                        <div css={s.settings} onClick={() => handleMenuClick("/account/mypage")}>
                             <FiSettings />
                         </div>
                         <div css={s.profileBox}>
