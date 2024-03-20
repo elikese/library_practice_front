@@ -1,13 +1,24 @@
 /** @jsxImportSource @emotion/react */
 import { useRef } from "react";
 import * as s from "./style";
-import { useQueryClient } from "react-query";
-import { FiUserCheck } from "react-icons/fi";
+import { useMutation, useQueryClient } from "react-query";
+import { sendAuthMailRequest } from "../../apis/api/sendAuthMail";
 
 function MyPage() {
     const fileRef = useRef();
     const queryClient = useQueryClient();
     const principalData = queryClient.getQueryData("PrincipalQuery");
+
+    const sendAuthMailMutation = useMutation({
+        mutationKey: "sendAuthMailMutation",
+        mutationFn: sendAuthMailRequest,
+        retry: 0,
+    });
+
+    const handleSendAuthMailClick = () => {
+        sendAuthMailMutation.mutate(); // mutationFn 호출
+        
+    }
 
     return (
         <div css={s.layout}>
@@ -25,7 +36,7 @@ function MyPage() {
                         <div css={s.infoText}>이메일: {principalData.data.email}</div>
                         {
                             principalData.data.authorities.filter(auth => auth.authority === "ROLE_USER").length === 0
-                                ? <button css={s.infoButton}>인증하기</button>
+                                ? <button css={s.infoButton} onClick={handleSendAuthMailClick}>인증하기</button>
                                 : "　✅인증완료"
                         }
 
