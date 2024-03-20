@@ -2,9 +2,9 @@
 import { useRecoilState } from "recoil";
 import * as s from "./style";
 import { HiMenu } from "react-icons/hi";
-import { FiUser, FiLogOut } from "react-icons/fi";
+import { FiUser, FiLogOut, FiHome } from "react-icons/fi";
 import { loginState, menuState } from "../../atoms/menuAtom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useQueryClient } from "react-query";
 import instance from "../../apis/utils/instance";
@@ -43,15 +43,23 @@ function RootHeader() {
             {
                 !isLogin
                     ? (
-                        <Link css={s.account} to={"/auth/signin"}>
-                            <FiUser />
-                        </Link>
+                        <div css={s.accountItems}>
+                            <Link css={s.account} to={"/"}>
+                                <FiHome />
+                            </Link>
+                            <Link css={s.account} to={"/auth/signin"}>
+                                <FiUser />
+                            </Link>
+                        </div>
                     )
                     : (
                         <div css={s.accountItems}>
                             <button css={s.logout} onClick={handleLogoutClick}>
                                 <FiLogOut />
                             </button>
+                            <Link css={s.account} to={"/"}>
+                                <FiHome />
+                            </Link>
                             <Link css={s.account} to={"/account/mypage"}>
                                 <FiUser />
                             </Link>

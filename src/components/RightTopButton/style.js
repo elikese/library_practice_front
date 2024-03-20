@@ -9,10 +9,9 @@ export const button = css`
     cursor: pointer;
     &:hover {
         text-shadow: 0px 0px 1px ;
-        transform: rotate(360deg)
+        font-size: 14px;
     }
     &:active{
-        transform: rotate(900deg);
         text-shadow: 0px 0px 5px ;
     }
 `;

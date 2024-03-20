@@ -4,6 +4,7 @@ import * as s from "./style";
 import { useMutation, useQueryClient } from "react-query";
 import { sendAuthMailRequest } from "../../apis/api/sendAuthMail";
 import FullsizeLoader from "../../components/FullSizeLoader/FullSizeLoader";
+import { GoCheckCircleFill } from "react-icons/go";
 
 function MyPage() {
     const fileRef = useRef();
@@ -31,7 +32,6 @@ function MyPage() {
 
     return (
         <>
-
             <div css={s.layout}>
                 {
                     sendAuthMailMutation.isLoading
@@ -53,12 +53,12 @@ function MyPage() {
                             {
                                 principalData.data.authorities.filter(auth => auth.authority === "ROLE_USER").length === 0
                                     ? <button css={s.infoButton} onClick={handleSendAuthMailClick}>인증하기</button>
-                                    : "　✅인증완료"
+                                    : <div css={s.emailCheck}> <GoCheckCircleFill />인증완료 </div>
                             }
                         </div>
-                        <div>
-                            <button>정보 수정</button>
-                            <button>비밀번호 수정</button>
+                        <div css={s.infoButtons}>
+                            <button css={s.infoButton}>정보 수정</button>
+                            <button css={s.infoButton}>비밀번호 수정</button>
                         </div>
                     </div>
                 </div>
