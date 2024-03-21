@@ -1,13 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import axios from "axios";
 import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
 import RightTopButton from "../../components/RightTopButton/RightTopButton";
 import { useInput } from "../../hooks/useInput";
 import * as s from "./style";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useMutation } from "react-query";
+import { oAuth2SignupRequest } from "../../apis/api/signup";
 
 function OAuth2SignupPage() {
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [username, setUsername, userNameChange] = useInput();
   const [password, setPassword, passwordChange] = useInput();
@@ -22,6 +24,64 @@ function OAuth2SignupPage() {
     email: null
   });
 
+  const oAuth2SignupMutation = useMutation({
+    mutationKey: "oAuth2SignupMutation",
+    mutationFn: oAuth2SignupRequest,
+    onSuccess: response => {
+      if (response.data) {
+        navigate("/auth/signin");
+      }
+    },
+    onError: error => {
+      const errorMap = error.response.data;
+      const entries = Object.entries(errorMap);
+
+      let newMessageGroup = {
+        username: {
+          type: "success",
+          text: "Good✅"
+        },
+        password: {
+          type: "success",
+          text: "Good✅"
+        },
+        checkPassword: {
+          type: "success",
+          text: ""
+        },
+        name: {
+          type: "success",
+          text: "Good✅"
+        },
+        email: {
+          type: "success",
+          text: ""
+        },
+      };
+
+      for (let [key, value] of entries) {
+        newMessageGroup = {
+          ...newMessageGroup,
+          [key]: {
+            type: "error",
+            text: value
+          }
+        }
+      }
+
+      if (newMessageGroup.password.type === "error") {
+        newMessageGroup = {
+          ...newMessageGroup,
+          checkPassword: null
+        }
+        setPassword(() => "");
+        setCheckPasswordValue(() => "");
+      }
+
+      setMessageGroup(() => newMessageGroup);
+    }
+
+  });
 
   const handleCheckPassword = (e) => {
     if (!!e.target.value) {
@@ -55,73 +115,14 @@ function OAuth2SignupPage() {
       })
     }
 
-    const signupData = {
+    oAuth2SignupMutation.mutate({
       username,
       password,
-      checkPassword,
       name,
-      email
-    }
-
-    const signupRequest = async (signupData) => {
-
-      try {
-        const response = await axios.post("http://localhost:8080/auth/signup", signupData);
-        if (response.data) {
-          navigate("/auth/signin");
-        }
-      } catch (error) {
-        const errorMap = error.response.data;
-        const entries = Object.entries(errorMap);
-
-        let newMessageGroup = {
-          username: {
-            type: "success",
-            text: "Good✅"
-          },
-          password: {
-            type: "success",
-            text: "Good✅"
-          },
-          checkPassword: {
-            type: "success",
-            text: ""
-          },
-          name: {
-            type: "success",
-            text: "Good✅"
-          },
-          email: {
-            type: "success",
-            text: ""
-          },
-        };
-
-        for (let [key, value] of entries) {
-          newMessageGroup = {
-            ...newMessageGroup,
-            [key]: {
-              type: "error",
-              text: value
-            }
-          }
-        }
-
-        if (newMessageGroup.password.type === "error") {
-          newMessageGroup = {
-            ...newMessageGroup,
-            checkPassword: null
-          }
-          setPassword(() => "");
-          setCheckPasswordValue(() => "");
-        }
-
-        setMessageGroup(() => newMessageGroup);
-      }
-    }
-
-    signupRequest(signupData);
-
+      email,
+      oAuth2Name: searchParams.get("name"),
+      providerName: searchParams.get("provider")
+    });
   }
 
   return (
