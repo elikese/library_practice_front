@@ -9,6 +9,7 @@ import RootHeader from '../components/RootHeader/RootHeader';
 import FullSizeLoader from '../components/FullSizeLoader/FullSizeLoader';
 import MyPage from '../pages/MyPage/MyPage';
 import PageContainer from '../components/PageContainer/PageContainer';
+import { AnimatePresence } from 'framer-motion';
 
 
 // useQuery => GET 요청시 사용
@@ -47,11 +48,14 @@ function AuthRoute(props) {
         {
           PrincipalQuery.isLoading
             ? <FullSizeLoader size={"30px"} />
-            : <Routes>
-              <Route path='auth/*' element={<AuthPage />}></Route>
-              <Route path='/' element={<HomePage />}></Route>
-              <Route path='/account/mypage' element={<MyPage />}></Route>
-            </Routes>
+            :
+            <AnimatePresence>
+              <Routes>
+                <Route path='auth/*' element={<AuthPage />}></Route>
+                <Route path='/' element={<HomePage />}></Route>
+                <Route path='/account/mypage' element={<MyPage />}></Route>
+              </Routes>
+            </AnimatePresence>
         }
       </PageContainer>
     </>

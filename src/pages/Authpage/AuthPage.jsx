@@ -8,18 +8,19 @@ import OAuth2SignupPage from "../OAuth2SignupPage/OAuth2SignupPage copy";
 import OAuth2SigninPage from "../OAuth2SigninPage/OAuth2SigninPage";
 import { useQueryClient } from "react-query";
 import { useEffect } from "react";
+import OAuthMergePage from "../OAuth2MergePage/OAuthMergePage";
 
 function AuthPage() {
   const queryClient = useQueryClient();
   const principalData = queryClient.getQueriesData("principalQuery");
 
-  useEffect(() => {
-    if (!!principalData) {
-      alert("잘못된 접근입니다!");
-      window.location.replace("/");
-    }
-  }, []);
-  
+  // useEffect(() => {
+  //   if (!!principalData) {
+  //     alert("잘못된 접근입니다!");
+  //     window.location.replace("/");
+  //   }
+  // }, []);
+
   return (
     <div css={s.layout}>
       <Routes>
@@ -28,7 +29,7 @@ function AuthPage() {
         <Route path='/oauth2' element={<OAuth2Page />} />
         <Route path='/oauth2/signin' element={<OAuth2SigninPage />} />
         <Route path='/oauth2/signup' element={<OAuth2SignupPage />} />
-        <Route path='/oauth2/merge' />
+        <Route path='/oauth2/merge' element={<OAuthMergePage />} />
       </Routes>
     </div>
   );
