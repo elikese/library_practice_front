@@ -5,7 +5,10 @@ import RightTopButton from "../../components/RightTopButton/RightTopButton";
 import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
 import { Link } from "react-router-dom";
 import { signinRequest } from "../../apis/api/signin";
-import React from "react";
+import { motion } from 'framer-motion';
+import googleImg from '../../assets/loginbuttons/Login_google.png'
+import kakaoImg from '../../assets/loginbuttons/Login_kakao.png'
+import naverImg from '../../assets/loginbuttons/Login_naver.png'
 
 function SigninPage() {
   const [username, usernameChange] = useInput();
@@ -32,18 +35,30 @@ function SigninPage() {
 
   return (
     <>
-      <div css={s.header}>
-        <h1>로그인</h1>
-        <RightTopButton onClick={handleSigninSubmit}>로그인하기</RightTopButton>
-      </div>
-      <AuthPageInput type={"text"} name={"username"} placeholder={"아이디"} value={username} onChange={usernameChange} />
-      <AuthPageInput type={"password"} name={"password"} placeholder={"비밀번호"} value={password} onChange={passwordChange} />
-      <Link to={"/auth/signup"}>회원가입</Link>
-      <div>
-        <a>카카오로그인</a>
-        <a href="http://localhost:8080/oauth2/authorization/google">구글로그인</a>
-        <a>네이버로그인</a>
-      </div>
+      <motion.div
+        initial={{ "opacity": 0 }}
+        animate={{ "opacity": 1 }}
+        exit={{ "opacity": 1 }}
+      >
+        <div css={s.header}>
+          <h1>로그인</h1>
+          <RightTopButton onClick={handleSigninSubmit}>로그인하기</RightTopButton>
+        </div>
+        <AuthPageInput type={"text"} name={"username"} placeholder={"아이디"} value={username} onChange={usernameChange} />
+        <AuthPageInput type={"password"} name={"password"} placeholder={"비밀번호"} value={password} onChange={passwordChange} />
+        <Link to={"/auth/signup"} css={s.signupButton}>회원가입</Link>
+        <div css={s.loginMenuBox}>
+          <div css={s.loginBox}>
+            <a href="http://localhost:8080/oauth2/authorization/kakao"><img src={kakaoImg} alt="카카오로그인" /></a>
+          </div>
+          <div css={s.loginBox}>
+            <a href="http://localhost:8080/oauth2/authorization/google"><img src={googleImg} alt="구글로그인" /></a>
+          </div>
+          <div css={s.loginBox}>
+            <a href="http://localhost:8080/oauth2/authorization/naver"><img src={naverImg} alt="네이버로그인" /></a>
+          </div>
+        </div>
+      </motion.div>
     </>
   );
 }

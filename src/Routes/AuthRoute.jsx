@@ -10,6 +10,7 @@ import FullSizeLoader from '../components/FullSizeLoader/FullSizeLoader';
 import MyPage from '../pages/MyPage/MyPage';
 import PageContainer from '../components/PageContainer/PageContainer';
 import { AnimatePresence } from 'framer-motion';
+import PasswordEditPage from '../pages/PasswordEditPage/PasswordEditPage';
 
 
 // useQuery => GET 요청시 사용
@@ -51,9 +52,10 @@ function AuthRoute(props) {
             :
             <AnimatePresence>
               <Routes>
-                <Route path='auth/*' element={<AuthPage />}></Route>
-                <Route path='/' element={<HomePage />}></Route>
-                <Route path='/account/mypage' element={<MyPage />}></Route>
+                <Route path='auth/*' element={<AuthPage />} />
+                <Route path='/' element={<HomePage />} />
+                <Route path='/account/mypage' element={<MyPage />} />
+                <Route path='/account/edit/password' element={<PasswordEditPage />} />
               </Routes>
             </AnimatePresence>
         }

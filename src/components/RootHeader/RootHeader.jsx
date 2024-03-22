@@ -32,6 +32,7 @@ function RootHeader() {
             return config;
         });
         queryClient.refetchQueries("PrincipalQuery");
+        window.location.replace("/auth/signin");
     }
 
 

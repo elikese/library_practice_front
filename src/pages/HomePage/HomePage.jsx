@@ -1,17 +1,38 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import { motion } from 'framer-motion';
+import bookImg from '../../assets/book.png';
 
 function HomePage() {
     return (
-        <motion.div
-            initial={{ "opacity": 0 }}
-            animate={{ "opacity": 1 }}
-            exit={{ "opacity": 1 }}
-            css={s.layout}
-        >
-            <h1>MainPage</h1>
-        </motion.div>
+        <div css={s.layout}>
+            <motion.div
+                css={s.pageContainer}
+                transition={{ "duration": 1 }}
+                initial={{ "opacity": 0 }}
+                animate={{ "opacity": 1 }}
+                exit={{ "opacity": 0 }}
+            >
+                <h1>책사실분 구합니다</h1>
+            </motion.div>
+            <motion.div
+                css={s.imgBox}
+                transition={{ "duration": 1, delay: 0.5 }}
+                initial={{ "opacity": 0, }}
+                animate={{ "opacity": 1 }}
+                exit={{ "opacity": 0 }}>
+                <img src={bookImg} />
+            </motion.div>
+            <motion.div
+                css={s.pageContainer}
+                transition={{ "duration": 1, delay: 1 }}
+                initial={{ "opacity": 0 }}
+                animate={{ "opacity": 1 }}
+                exit={{ "opacity": 0 }}
+            >
+                <h1>읽으면 사야됨</h1>
+            </motion.div>
+        </div>
     );
 }
 
