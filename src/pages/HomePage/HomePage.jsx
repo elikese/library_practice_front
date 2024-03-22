@@ -13,7 +13,7 @@ function HomePage() {
                 animate={{ "opacity": 1 }}
                 exit={{ "opacity": 0 }}
             >
-                <h1>책사실분 구합니다</h1>
+                <h1>책읽는사이트</h1>
             </motion.div>
             <motion.div
                 css={s.imgBox}
