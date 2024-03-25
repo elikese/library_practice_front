@@ -12,8 +12,8 @@ import { redirect } from "react-router-dom";
 function BookManagement() {
   const [bookTypeOptions, setBookTypeOptions] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
-  const fileRef = useRef();
 
+  const fileRef = useRef();
   const inputRefs = [
     useRef(), // bookId
     useRef(), // isbn
@@ -28,7 +28,6 @@ function BookManagement() {
   const nextInput = (ref) => {
     ref.current.focus();
   }
-
   const submit = () => {
     window.confirm("저장하시겠습니까?");
     console.log([bookId.value, isbn.value, bookTypeId.value, categoryId.value, bookName.value, authorName.value, publisherName.value, imgUrl.value])
@@ -95,7 +94,7 @@ function BookManagement() {
   );
 
   const handleImgChange = (e) => {
-    const files = e.target.files;
+    const files = Array.from(e.target.files);
     const reader = new FileReader();
 
     reader.onload = (e) => {
