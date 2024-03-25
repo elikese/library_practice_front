@@ -11,8 +11,7 @@ const inputBox = css`
   height: 100%;
 `
 
-function BookRegisterInput({ value, onChange, onKeyUp, ref }) {
-
+function BookRegisterInput({ value, onChange, onKeyDown, bookRef }) {
 
   return (
     <input
@@ -20,8 +19,8 @@ function BookRegisterInput({ value, onChange, onKeyUp, ref }) {
       type="text"
       value={value}
       onChange={onChange}
-      onKeyUp={onKeyUp}
-      ref={ref}
+      onKeyDown={onKeyDown}
+      ref={bookRef}
     />
   );
 }

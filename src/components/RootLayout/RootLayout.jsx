@@ -7,7 +7,6 @@ function RootLayout({ children }) {
     const [show, setShow] = useRecoilState(menuState);
 
     const handleBackgroundClick = (e) => {
-        console.log("클릭")
         setShow(() => false);
     }
 

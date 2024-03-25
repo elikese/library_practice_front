@@ -12,28 +12,35 @@ function BookManagement() {
   const [bookTypeOptions, setBookTypeOptions] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const fileRef = useRef();
-  const inputRefs = [
-    useRef(),
-    useRef(),
-    useRef(),
-    useRef(),
-    useRef(),
-    useRef(),
-    useRef(),
-    useRef()
-  ];
 
-  const bookId = useBookRegisterInput();
-  const isbn = useBookRegisterInput(nextInput, inputRefs[1]);
-  const bookName = useBookRegisterInput(nextInput, inputRefs[4]);
-  const authorName = useBookRegisterInput(nextInput, inputRefs[5]);
-  const publisherName = useBookRegisterInput(nextInput, inputRefs[6]);
-  const imgUrl = useBookRegisterInput(nextInput, inputRefs[7]);
+  const inputRefs = [
+    useRef(), // bookId
+    useRef(), // isbn
+    useRef(), // 도서형식
+    useRef(), // 카테고리
+    useRef(), // 도서명
+    useRef(), // 저자명
+    useRef(), // 출판사명
+    useRef(), // file 
+    useRef()  // 표지url
+  ];
 
   const nextInput = (ref) => {
     ref.current.focus();
   }
 
+  const submit = () => {
+    window.confirm("저장하시겠습니까?");
+  }
+
+  const bookId = useBookRegisterInput(nextInput, inputRefs[1]);
+  const isbn = useBookRegisterInput(nextInput, inputRefs[2]);
+  const bookTypeName = useBookRegisterInput(nextInput, inputRefs[3]);
+  const categoryName = useBookRegisterInput(nextInput, inputRefs[4]);
+  const bookName = useBookRegisterInput(nextInput, inputRefs[5]);
+  const authorName = useBookRegisterInput(nextInput, inputRefs[6]);
+  const publisherName = useBookRegisterInput(nextInput, inputRefs[7]);
+  const imgUrl = useBookRegisterInput(submit);
 
   const selectStyle = {
     control: (baseStyles, state) => ({
@@ -45,6 +52,7 @@ function BookManagement() {
       boxShadow: "none"
     })
   }
+
   const categoryQuery = useQuery(
     ["categoryQuery"],
     getAllCategoryRequest,
@@ -108,11 +116,21 @@ function BookManagement() {
             <tr>
               <th css={s.registerTh}>도서코드</th>
               <td>
-                <BookRegisterInput />
+                <BookRegisterInput
+                  value={bookId.value}
+                  bookRef={inputRefs[0]}
+                  onChange={bookId.handleOnChange}
+                  onKeyDown={bookId.handleOnKeyDown}
+                />
               </td>
               <th css={s.registerTh}>ISBN</th>
               <td>
-                <BookRegisterInput />
+                <BookRegisterInput
+                  value={isbn.value}
+                  bookRef={inputRefs[1]}
+                  onChange={isbn.handleOnChange}
+                  onKeyDown={isbn.handleOnKeyDown}
+                />
               </td>
               <td rowSpan={5} css={s.preview}>
                 <div css={s.imageBox}>
@@ -125,29 +143,52 @@ function BookManagement() {
               <td>
                 <Select
                   styles={selectStyle}
-                  options={bookTypeOptions} />
+                  options={bookTypeOptions}
+                  ref={inputRefs[2]}
+                  onKeyDown={bookTypeName.handleOnKeyDown}
+                  onChange={bookTypeName.handleOnChange}
+                />
               </td>
               <th css={s.registerTh}>카테고리</th>
               <td >
                 <Select
                   styles={selectStyle}
-                  options={categoryOptions} />
+                  options={bookTypeOptions}
+                  ref={inputRefs[3]}
+                  onKeyDown={categoryName.handleOnKeyDown}
+                  onChange={categoryName.handleOnChange}
+                />
               </td>
             </tr>
             <tr>
               <th css={s.registerTh}>도서명</th>
               <td colSpan={3}>
-                <BookRegisterInput />
+                <BookRegisterInput
+                  value={bookName.value}
+                  bookRef={inputRefs[4]}
+                  onChange={bookName.handleOnChange}
+                  onKeyDown={bookName.handleOnKeyDown}
+                />
               </td>
             </tr>
             <tr>
               <th css={s.registerTh}>저자명</th>
               <td>
-                <BookRegisterInput />
+                <BookRegisterInput
+                  value={authorName.value}
+                  bookRef={inputRefs[5]}
+                  onChange={authorName.handleOnChange}
+                  onKeyDown={authorName.handleOnKeyDown}
+                />
               </td>
               <th css={s.registerTh}>출판사</th>
               <td>
-                <BookRegisterInput />
+                <BookRegisterInput
+                  value={publisherName.value}
+                  bookRef={inputRefs[6]}
+                  onChange={publisherName.handleOnChange}
+                  onKeyDown={publisherName.handleOnKeyDown}
+                />
               </td>
             </tr>
             <tr>
@@ -155,7 +196,12 @@ function BookManagement() {
               <td colSpan={3}>
                 <div css={s.imgUrl}>
                   <span css={s.imgUrlBox}>
-                    <BookRegisterInput />
+                    <BookRegisterInput
+                      value={imgUrl.value}
+                      bookRef={inputRefs[7]}
+                      onChange={imgUrl.handleOnChange}
+                      onKeyDown={imgUrl.handleOnKeyDown}
+                    />
                   </span>
                   <input type="file" style={{ display: "none" }} ref={fileRef} onChange={handleImgChange} />
                   <button css={s.imgAddButton} onClick={() => fileRef.current.click()}>
