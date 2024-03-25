@@ -5,6 +5,7 @@ export const layout = (show) => css`
     opacity: ${show ? 1 : 0};
     position: absolute;
     top: 0;
+    z-index: 999;
     left: ${show ? "0px" : "-200px"};
     box-sizing: border-box;
     border-right: 1px solid #dbdbdb;

@@ -54,9 +54,9 @@ function PasswordEditPage(props) {
       return;
     }
     editPasswordMutation.mutate({
-      oldPassword: oldPassword,
-      newPassword: newPassword,
-      newPasswordCheck: newPasswordCheck
+      oldPassword,
+      newPassword,
+      newPasswordCheck
     });
 
   }

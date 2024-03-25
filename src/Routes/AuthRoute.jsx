@@ -11,6 +11,7 @@ import MyPage from '../pages/MyPage/MyPage';
 import PageContainer from '../components/PageContainer/PageContainer';
 import { AnimatePresence } from 'framer-motion';
 import PasswordEditPage from '../pages/PasswordEditPage/PasswordEditPage';
+import BookManagement from '../pages/Admin/BookManagement/BookManagement';
 
 
 // useQuery => GET 요청시 사용
@@ -56,6 +57,7 @@ function AuthRoute(props) {
                 <Route path='/' element={<HomePage />} />
                 <Route path='/account/mypage' element={<MyPage />} />
                 <Route path='/account/edit/password' element={<PasswordEditPage />} />
+                <Route path='/admin/book/management' element={<BookManagement />} />
               </Routes>
             </AnimatePresence>
         }
