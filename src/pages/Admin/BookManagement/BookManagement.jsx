@@ -7,6 +7,7 @@ import { getAllBookTypeRequest, getAllCategoryRequest } from "../../../apis/api/
 import { useRef, useState } from "react";
 import { CiSquarePlus } from "react-icons/ci";
 import { useBookRegisterInput } from "../../../hooks/useBookRegisterInput";
+import { redirect } from "react-router-dom";
 
 function BookManagement() {
   const [bookTypeOptions, setBookTypeOptions] = useState([]);
@@ -21,7 +22,6 @@ function BookManagement() {
     useRef(), // 도서명
     useRef(), // 저자명
     useRef(), // 출판사명
-    useRef(), // file 
     useRef()  // 표지url
   ];
 
@@ -31,12 +31,13 @@ function BookManagement() {
 
   const submit = () => {
     window.confirm("저장하시겠습니까?");
+    console.log([bookId.value, isbn.value, bookTypeId.value, categoryId.value, bookName.value, authorName.value, publisherName.value, imgUrl.value])
   }
 
   const bookId = useBookRegisterInput(nextInput, inputRefs[1]);
   const isbn = useBookRegisterInput(nextInput, inputRefs[2]);
-  const bookTypeName = useBookRegisterInput(nextInput, inputRefs[3]);
-  const categoryName = useBookRegisterInput(nextInput, inputRefs[4]);
+  const bookTypeId = useBookRegisterInput(nextInput, inputRefs[3]);
+  const categoryId = useBookRegisterInput(nextInput, inputRefs[4]);
   const bookName = useBookRegisterInput(nextInput, inputRefs[5]);
   const authorName = useBookRegisterInput(nextInput, inputRefs[6]);
   const publisherName = useBookRegisterInput(nextInput, inputRefs[7]);
@@ -94,13 +95,14 @@ function BookManagement() {
   );
 
   const handleImgChange = (e) => {
+    const files = e.target.files;
     const reader = new FileReader();
-    console.log(e.target)
-    // reader.onload = (e) => {
-    //   console.log(e);
-    // }
 
-    // reader.readAsDataURL(e.target.value);
+    reader.onload = (e) => {
+      console.log(e.target.result)
+    }
+
+    reader.readAsDataURL(files[0]);
   }
 
 
@@ -118,7 +120,7 @@ function BookManagement() {
               <td>
                 <BookRegisterInput
                   value={bookId.value}
-                  bookRef={inputRefs[0]}
+                  bookref={inputRefs[0]}
                   onChange={bookId.handleOnChange}
                   onKeyDown={bookId.handleOnKeyDown}
                 />
@@ -127,7 +129,7 @@ function BookManagement() {
               <td>
                 <BookRegisterInput
                   value={isbn.value}
-                  bookRef={inputRefs[1]}
+                  bookref={inputRefs[1]}
                   onChange={isbn.handleOnChange}
                   onKeyDown={isbn.handleOnKeyDown}
                 />
@@ -145,18 +147,18 @@ function BookManagement() {
                   styles={selectStyle}
                   options={bookTypeOptions}
                   ref={inputRefs[2]}
-                  onKeyDown={bookTypeName.handleOnKeyDown}
-                  onChange={bookTypeName.handleOnChange}
+                  onKeyDown={bookTypeId.handleOnKeyDown}
+                  onChange={bookTypeId.handleOnChange}
                 />
               </td>
               <th css={s.registerTh}>카테고리</th>
               <td >
                 <Select
                   styles={selectStyle}
-                  options={bookTypeOptions}
+                  options={categoryOptions}
                   ref={inputRefs[3]}
-                  onKeyDown={categoryName.handleOnKeyDown}
-                  onChange={categoryName.handleOnChange}
+                  onKeyDown={categoryId.handleOnKeyDown}
+                  onChange={categoryId.handleOnChange}
                 />
               </td>
             </tr>
@@ -165,7 +167,7 @@ function BookManagement() {
               <td colSpan={3}>
                 <BookRegisterInput
                   value={bookName.value}
-                  bookRef={inputRefs[4]}
+                  bookref={inputRefs[4]}
                   onChange={bookName.handleOnChange}
                   onKeyDown={bookName.handleOnKeyDown}
                 />
@@ -176,7 +178,7 @@ function BookManagement() {
               <td>
                 <BookRegisterInput
                   value={authorName.value}
-                  bookRef={inputRefs[5]}
+                  bookref={inputRefs[5]}
                   onChange={authorName.handleOnChange}
                   onKeyDown={authorName.handleOnKeyDown}
                 />
@@ -185,7 +187,7 @@ function BookManagement() {
               <td>
                 <BookRegisterInput
                   value={publisherName.value}
-                  bookRef={inputRefs[6]}
+                  bookref={inputRefs[6]}
                   onChange={publisherName.handleOnChange}
                   onKeyDown={publisherName.handleOnKeyDown}
                 />
@@ -198,7 +200,7 @@ function BookManagement() {
                   <span css={s.imgUrlBox}>
                     <BookRegisterInput
                       value={imgUrl.value}
-                      bookRef={inputRefs[7]}
+                      bookref={inputRefs[7]}
                       onChange={imgUrl.handleOnChange}
                       onKeyDown={imgUrl.handleOnKeyDown}
                     />
