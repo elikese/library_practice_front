@@ -12,6 +12,7 @@ export const header = css`
   display: flex;
   justify-content: space-between;
   & > h1 {
+    padding: 0;
     margin: 0;
     margin-bottom: 20px;
     font-size: 25px;

@@ -2,7 +2,7 @@
 import Select from "react-select";
 import BookRegisterInput from "../../../components/BookRegisterInput/BookRegisterInput";
 import * as s from "./style";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { getAllBookTypeRequest, getAllCategoryRequest } from "../../../apis/api/options";
 import { useRef, useState } from "react";
 import { CiSquarePlus } from "react-icons/ci";
@@ -10,7 +10,8 @@ import { useBookRegisterInput } from "../../../hooks/useBookRegisterInput";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../../apis/firebase/config/firebaseConfig";
 import { v4 as uuid } from "uuid"
-
+import RightTopButton from "../../../components/RightTopButton/RightTopButton";
+import { registerBook } from "../../../apis/api/bookApi";
 
 
 function BookManagement() {
@@ -28,34 +29,6 @@ function BookManagement() {
     useRef(), // 출판사명
     useRef()  // 표지url
   ];
-
-  const nextInput = (ref) => {
-    ref.current.focus();
-  }
-  const submit = () => {
-    window.confirm("저장하시겠습니까?");
-    console.log([bookId.value, isbn.value, bookTypeId.value, categoryId.value, bookName.value, authorName.value, publisherName.value, imgUrl.value])
-  }
-
-  const bookId = useBookRegisterInput(nextInput, inputRefs[1]);
-  const isbn = useBookRegisterInput(nextInput, inputRefs[2]);
-  const bookTypeId = useBookRegisterInput(nextInput, inputRefs[3]);
-  const categoryId = useBookRegisterInput(nextInput, inputRefs[4]);
-  const bookName = useBookRegisterInput(nextInput, inputRefs[5]);
-  const authorName = useBookRegisterInput(nextInput, inputRefs[6]);
-  const publisherName = useBookRegisterInput(nextInput, inputRefs[7]);
-  const imgUrl = useBookRegisterInput(submit);
-
-  const selectStyle = {
-    control: (baseStyles, state) => ({
-      ...baseStyles,
-      borderRadius: "8px",
-      border: "none",
-      outline: "none",
-      fontSize: "13px",
-      boxShadow: "none"
-    })
-  }
 
   const categoryQuery = useQuery(
     ["categoryQuery"],
@@ -97,9 +70,59 @@ function BookManagement() {
     }
   );
 
+  const nextInput = (ref) => {
+    ref.current.focus();
+  }
+
+  const bookRegisterMutation = useMutation({
+    mutationKey: "bookRegisterMutation",
+    mutationFn: registerBook,
+    onSuccess: response => {
+
+    },
+    onError: error => {
+
+    }
+  });
+
+  const submit = () => {
+    if (window.confirm("저장하시겠습니까?")) {
+      bookRegisterMutation.mutate({
+        isbn: isbn.value,
+        bookTypeId: bookTypeId.value,
+        categoryId: categoryId.value,
+        bookName: bookName.value,
+        authorName: authorName.value,
+        publisherName: publisherName.value,
+        coverImgUrl: imgUrl.value
+      });
+    }
+  }
+
+  const bookId = useBookRegisterInput(nextInput, inputRefs[1]);
+  const isbn = useBookRegisterInput(nextInput, inputRefs[2]);
+  const bookTypeId = useBookRegisterInput(nextInput, inputRefs[3]);
+  const categoryId = useBookRegisterInput(nextInput, inputRefs[4]);
+  const bookName = useBookRegisterInput(nextInput, inputRefs[5]);
+  const authorName = useBookRegisterInput(nextInput, inputRefs[6]);
+  const publisherName = useBookRegisterInput(nextInput, inputRefs[7]);
+  const imgUrl = useBookRegisterInput(submit);
+
+  const selectStyle = {
+    control: (baseStyles, state) => ({
+      ...baseStyles,
+      borderRadius: "8px",
+      border: "none",
+      outline: "none",
+      fontSize: "13px",
+      boxShadow: "none"
+    })
+  }
+
+
+
   const handleImgChange = (e) => {
     const files = Array.from(e.target.files);
-    const reader = new FileReader();
 
     if (files.length === 0) {
       e.target.value = "";
@@ -125,13 +148,6 @@ function BookManagement() {
           });
       }
     )
-
-
-    reader.onload = (e) => {
-      console.log(e.target.result)
-    }
-
-    reader.readAsDataURL(files[0]);
   }
 
 
@@ -140,6 +156,7 @@ function BookManagement() {
     <div css={s.layout}>
       <div css={s.header}>
         <h1>도서통합관리</h1>
+        <RightTopButton children={"저장하기"} onClick={submit} />
       </div>
       <div css={s.topLayout}>
         <table css={s.registerTable}>
