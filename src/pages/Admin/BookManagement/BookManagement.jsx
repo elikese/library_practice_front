@@ -7,7 +7,11 @@ import { getAllBookTypeRequest, getAllCategoryRequest } from "../../../apis/api/
 import { useRef, useState } from "react";
 import { CiSquarePlus } from "react-icons/ci";
 import { useBookRegisterInput } from "../../../hooks/useBookRegisterInput";
-import { redirect } from "react-router-dom";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../../../apis/firebase/config/firebaseConfig";
+import { v4 as uuid } from "uuid"
+
+
 
 function BookManagement() {
   const [bookTypeOptions, setBookTypeOptions] = useState([]);
@@ -97,6 +101,32 @@ function BookManagement() {
     const files = Array.from(e.target.files);
     const reader = new FileReader();
 
+    if (files.length === 0) {
+      e.target.value = "";
+      return;
+    }
+
+    if (!window.confirm("파일을 업로드 하시겠습니까?")) {
+      e.target.value = "";
+      return;
+    }
+
+    const storageRef = ref(storage, `library/book/cover/${uuid()}_${files[0].name}`);
+    const uploadTask = uploadBytesResumable(storageRef, files[0]);
+    uploadTask.on(
+      "state_changed",
+      snapshot => { },
+      error => { },
+      () => {
+        alert("업로드 완료")
+        getDownloadURL(storageRef)
+          .then(url => {
+            imgUrl.setValue(() => url);
+          });
+      }
+    )
+
+
     reader.onload = (e) => {
       console.log(e.target.result)
     }
@@ -135,7 +165,11 @@ function BookManagement() {
               </td>
               <td rowSpan={5} css={s.preview}>
                 <div css={s.imageBox}>
-                  <img src="https://dispatch.cdnser.be/wp-content/uploads/2018/01/20180102190245_1.jpg" alt="표지사진" />
+                  <img src={
+                    !imgUrl.value
+                      ? "https://cdn.icon-icons.com/icons2/2483/PNG/512/image_file_icon_149928.png"
+                      : imgUrl.value
+                  } alt="표지사진" />
                 </div>
               </td>
             </tr>

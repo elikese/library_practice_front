@@ -56,7 +56,7 @@ export const imageBox = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 150px;
   height: 100%;
   overflow: hidden;
 

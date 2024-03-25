@@ -19,6 +19,7 @@
     "react-select": "^5.8.0",
     "react-spinners": "^0.13.8",
     "recoil": "^0.7.7",
+    "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
