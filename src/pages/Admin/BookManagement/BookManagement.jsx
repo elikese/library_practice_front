@@ -12,12 +12,12 @@ import { storage } from "../../../apis/firebase/config/firebaseConfig";
 import { v4 as uuid } from "uuid"
 import RightTopButton from "../../../components/RightTopButton/RightTopButton";
 import { registerBook } from "../../../apis/api/bookApi";
+import AdminBookSearch from "../../../components/AdminBookSearch/AdminBookSearch";
 
 
 function BookManagement() {
   const [bookTypeOptions, setBookTypeOptions] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
-
   const fileRef = useRef();
   const inputRefs = [
     useRef(), // bookId
@@ -166,7 +166,7 @@ function BookManagement() {
               <td>
                 <BookRegisterInput
                   value={bookId.value}
-                  bookref={inputRefs[0]}
+                  ref={inputRefs[0]}
                   onChange={bookId.handleOnChange}
                   onKeyDown={bookId.handleOnKeyDown}
                 />
@@ -175,7 +175,7 @@ function BookManagement() {
               <td>
                 <BookRegisterInput
                   value={isbn.value}
-                  bookref={inputRefs[1]}
+                  ref={inputRefs[1]}
                   onChange={isbn.handleOnChange}
                   onKeyDown={isbn.handleOnKeyDown}
                 />
@@ -217,7 +217,7 @@ function BookManagement() {
               <td colSpan={3}>
                 <BookRegisterInput
                   value={bookName.value}
-                  bookref={inputRefs[4]}
+                  ref={inputRefs[4]}
                   onChange={bookName.handleOnChange}
                   onKeyDown={bookName.handleOnKeyDown}
                 />
@@ -228,7 +228,7 @@ function BookManagement() {
               <td>
                 <BookRegisterInput
                   value={authorName.value}
-                  bookref={inputRefs[5]}
+                  ref={inputRefs[5]}
                   onChange={authorName.handleOnChange}
                   onKeyDown={authorName.handleOnKeyDown}
                 />
@@ -237,7 +237,7 @@ function BookManagement() {
               <td>
                 <BookRegisterInput
                   value={publisherName.value}
-                  bookref={inputRefs[6]}
+                  ref={inputRefs[6]}
                   onChange={publisherName.handleOnChange}
                   onKeyDown={publisherName.handleOnKeyDown}
                 />
@@ -250,7 +250,7 @@ function BookManagement() {
                   <span css={s.imgUrlBox}>
                     <BookRegisterInput
                       value={imgUrl.value}
-                      bookref={inputRefs[7]}
+                      ref={inputRefs[7]}
                       onChange={imgUrl.handleOnChange}
                       onKeyDown={imgUrl.handleOnKeyDown}
                     />
@@ -264,8 +264,12 @@ function BookManagement() {
             </tr>
           </tbody>
         </table>
-        <div></div>
       </div>
+      <AdminBookSearch
+        bookTypeOptions={bookTypeOptions}
+        categoryOptions={categoryOptions}
+        selectStyle={selectStyle}
+      />
     </div>
   );
 }

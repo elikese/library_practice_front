@@ -9,7 +9,6 @@ export const button = css`
     cursor: pointer;
     &:hover {
         text-shadow: 0px 0px 1px ;
-        font-size: 14px;
     }
     &:active{
         text-shadow: 0px 0px 5px ;

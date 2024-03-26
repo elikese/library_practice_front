@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { forwardRef } from "react";
 
 
 const inputBox = css`
@@ -11,8 +12,8 @@ const inputBox = css`
   height: 100%;
 `
 
-function BookRegisterInput({ value, onChange, onKeyDown, bookref }) {
-
+const BookRegisterInput = forwardRef((props, ref) => {
+  const { value, onChange, onKeyDown } = props;
   return (
     <input
       css={inputBox}
@@ -20,9 +21,9 @@ function BookRegisterInput({ value, onChange, onKeyDown, bookref }) {
       value={value}
       onChange={onChange}
       onKeyDown={onKeyDown}
-      ref={bookref}
+      ref={ref}
     />
   );
-}
+});
 
 export default BookRegisterInput;

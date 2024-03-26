@@ -11,12 +11,13 @@ export const header = css`
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
   & > h1 {
     padding: 0;
     margin: 0;
-    margin-bottom: 20px;
     font-size: 25px;
   }
+  
 `;
 
 export const topLayout = css` 
@@ -96,4 +97,3 @@ export const imgUrl = css`
 export const imgURLBox4 = css`
  
 `
-
