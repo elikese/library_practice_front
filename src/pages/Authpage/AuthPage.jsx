@@ -12,7 +12,7 @@ import OAuthMergePage from "../OAuth2MergePage/OAuthMergePage";
 
 function AuthPage() {
   const queryClient = useQueryClient();
-  const principalData = queryClient.getQueriesData("principalQuery");
+  const principalData = queryClient.getQueriesData("PrincipalQuery");
 
   // useEffect(() => {
   //   if (!!principalData) {
