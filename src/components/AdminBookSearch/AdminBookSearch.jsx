@@ -10,6 +10,7 @@ import { useSearchParams } from "react-router-dom";
 function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
 
   const [searchParams] = useSearchParams();
+  const searchCount = 20;
   const selectedBookType = useReactSelect({ value: 0, label: "전체" });
   const selectedCategory = useReactSelect({ value: 0, label: "전체" });
   const selectedSearchType = useReactSelect({ value: 0, label: "전체" });
@@ -18,6 +19,7 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
     ["searchBooksQuery", searchParams.get("page")],
     async () => await searchBooksRequest({
       page: searchParams.get("page"),
+      count: searchCount,
       bookTypeId: selectedBookType.option.value,
       categoryId: selectedCategory.option.value,
       searchTypeId: selectedSearchType.option.value,
