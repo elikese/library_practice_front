@@ -7,7 +7,7 @@ import { useQuery } from "react-query";
 import { searchBooksRequest } from "../../apis/api/bookApi";
 import { useSearchParams } from "react-router-dom";
 
-function AdminBookSearch({ searchRefresh, selectStyle, bookTypeOptions, categoryOptions, setSearchRefresh }) {
+function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
 
   const [searchParams] = useSearchParams();
   const selectedBookType = useReactSelect({ value: 0, label: "전체" });
@@ -25,16 +25,10 @@ function AdminBookSearch({ searchRefresh, selectStyle, bookTypeOptions, category
     }),
     {
       retry: 0,
-      enabled: searchRefresh,
       refetchOnWindowFocus: false,
       onSuccess: response => {
         console.log(response);
-        setSearchRefresh(() => false);
       },
-      onError: error => {
-        console.log(error);
-        setSearchRefresh(() => false);
-      }
     }
   );
 
@@ -43,8 +37,7 @@ function AdminBookSearch({ searchRefresh, selectStyle, bookTypeOptions, category
       `책 타입: ${selectedBookType.option.label}, \n카테고리: ${selectedCategory.option.label}, \n세부검색: ${selectedSearchType.option.label}검색, \n검색어: ${searchText.value}
       \n로 검색하시겠습니까?`
     )) {
-      setSearchRefresh(() => true);
-      console.log("검색하기")
+      searchBooksQuery.refetch();
     }
 
   }
