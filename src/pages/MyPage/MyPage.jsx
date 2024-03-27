@@ -7,7 +7,7 @@ import FullsizeLoader from "../../components/FullSizeLoader/FullSizeLoader";
 import { GoCheckCircleFill } from "react-icons/go";
 import { motion } from 'framer-motion';
 import { useAuthCheck } from "../../hooks/useAuthCheck";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function MyPage() {
     useAuthCheck();
@@ -63,6 +63,11 @@ function MyPage() {
                                     principalData?.data.authorities.filter(auth => auth.authority === "ROLE_USER").length === 0
                                         ? <button css={s.infoButton} onClick={handleSendAuthMailClick}>인증하기</button>
                                         : <div css={s.emailCheck}> <GoCheckCircleFill />인증완료 </div>
+                                }
+                                {
+                                    principalData?.data.authorities.filter(auth => auth.authority === "ROLE_ADMIN").length === 0
+                                        ? <></>
+                                        : <Link to={"http://localhost:3000/admin/book/management?page=1"}></Link>
                                 }
                             </div>
                             <div css={s.infoButtons}>

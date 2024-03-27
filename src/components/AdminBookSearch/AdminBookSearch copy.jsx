@@ -8,8 +8,6 @@ import { getBookCountRequest, searchBooksRequest } from "../../apis/api/bookApi"
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import AdminBookSearchPageNumbers from "../AdminBookSearchPageNumbers/AdminBookSearchPageNumbers";
-import { useRecoilState } from "recoil";
-import { selectedBookState } from "../../atoms/adminSelectedBookAtom";
 
 function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
 
@@ -19,10 +17,10 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
   const selectedCategory = useReactSelect({ value: 0, label: "전체" });
   const selectedSearchType = useReactSelect({ value: 0, label: "전체" });
   const [books, setBooks] = useState([]);
+  const [checkAll, setCheckAll] = useState(false);
+
   const page = searchParams.get("page");
   const checkAllBoxRef = useRef();
-  const [selectedBook, setSelectedBook] = useRecoilState(selectedBookState);
-
   const searchBooksQuery = useQuery(
     ["searchBooksQuery", page],
     async () => await searchBooksRequest({
@@ -75,6 +73,7 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
         page: 1
       })
       searchBooksQuery.refetch();
+
     }
 
   }
@@ -100,56 +99,34 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
     })
   }
 
-  const handleCheckClick = (id) => {
-    const newBooks = [...books].map(book => {
-      if (book.bookId === id) {
-        return {
-          ...book,
-          checked: !book.checked
-        }
-      }
-      return book;
-    })
-    setBooks(() => newBooks)
-    const lastCheckedBook = books.filter(book => book.bookId === id)[0];
-
-    if (lastCheckedBook === null) {
-      setSelectedBook(() => lastCheckedBook)
-
-    }
-    setSelectedBook(() => ({
-      bookId: 0,
-      isbn: "",
-      bookTypeId: 0,
-      bookTypeName: "",
-      categoryId: 0,
-      categoryName: "",
-      bookName: "",
-      authorName: "",
-      publisherName: "",
-      coverImgUrl: ""
-    }));
-  }
-
-  const handleCheckAllClick = () => {
-    const newBooks = [...books].map(book => {
+  useEffect(() => {
+    setBooks(() => books.map(book => {
       return {
         ...book,
-        checked: checkAllBoxRef.current.checked
+        checked: checkAll
       }
+    }))
+  }, [checkAll])
+
+  const handleCheckClick = (e) => {
+    const bookId = parseInt(e.target.value);
+    setBooks(() => {
+      books?.map(book => {
+        if (book.bookId === bookId) {
+          return {
+            ...book,
+            checked: e.target.checked
+          }
+        }
+        return book;
+      })
     })
-    setBooks(() => newBooks)
   }
 
-  useEffect(() => {
-    const newBooks = [...books].filter(book => book.checked === false)
-    if (newBooks.length !== 0) {
-      checkAllBoxRef.current.checked = false;
-    }
-    if (newBooks.length === 0) {
-      checkAllBoxRef.current.checked = true;
-    }
-  }, [books])
+  const handleCheckAllChange = (e) => {
+    setCheckAll(() => e.target.checked)
+  }
+
 
   return (
     <div>
@@ -191,8 +168,8 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
               <th>
                 <input
                   type="checkbox"
-                  onClick={handleCheckAllClick}
-                  ref={checkAllBoxRef}
+                  onChange={(e) => handleCheckAllChange(e)}
+                  checked={checkAll}
                 />
               </th>
               <th>코드번호</th>
@@ -214,12 +191,12 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
                       type="checkbox"
                       id={book.bookId}
                       checked={book.checked}
-                      onClick={() => handleCheckClick(book.bookId)}
+                      onClick={(e) => handleCheckClick(e)}
                     />
                   </td>
-                  <td onClick={() => handleCheckClick(book.bookId)}>{book.bookId}</td>
-                  <td onClick={() => handleCheckClick(book.bookId)}>{book.bookName}</td>
-                  <td onClick={() => handleCheckClick(book.bookId)}>{book.authorName}</td>
+                  <td>{book.bookId}</td>
+                  <td>{book.bookName}</td>
+                  <td>{book.authorName}</td>
                   <td>{book.publisherName}</td>
                   <td>{book.isbn}</td>
                   <td>{book.bookTypeName}</td>

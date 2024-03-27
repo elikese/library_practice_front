@@ -15,7 +15,6 @@ export const searchInput = css`
     outline: none;
     padding: 10px;
     box-shadow: inset 0px 0px 3px #00000011;
-    
 `
 
 export const searchButton = css`
@@ -33,7 +32,6 @@ export const searchButton = css`
         background-color: #eeeeee;
     }
 `
-
 
 export const tableLayout = css`
     position: relative;
@@ -61,6 +59,7 @@ export const table = css`
     border-collapse: collapse;
     width: max-content;
     font-size: 14px;
+
     & td, & th {
         border: 1px solid #dbdbdb;
         padding: 0px 5px;
@@ -96,15 +95,15 @@ export const table = css`
     }
     & tr > th:nth-of-type(4),
     & tr > td:nth-of-type(4) {
-        min-width: 150px;
+        min-width: 100px;
     }
     & tr > th:nth-of-type(5),
     & tr > td:nth-of-type(5) {
-        min-width: 100px;
+        min-width: 80px;
     }
     & tr > th:nth-of-type(6),
     & tr > td:nth-of-type(6) {
-        min-width: 100px;
+        min-width: 80px;
     }
     & tr > th:nth-of-type(7),
     & tr > td:nth-of-type(7) {
@@ -116,7 +115,7 @@ export const table = css`
     }
     & tr > th:nth-of-type(8),
     & tr > td:nth-of-type(8) {
-        min-width: 100px;
+        min-width: 80px;
     }
 
 `;
@@ -125,5 +124,10 @@ export const theadTr = css`
     position: sticky;
     top: 0;
     background-color: #fafafa;
+`;
+
+export const tbodyTr = (ischecked) => css`
+    top: 0;
+    background-color: ${ischecked ? "#eeeeee" : "white"};
 `;
 
