@@ -15,7 +15,6 @@ export const searchInput = css`
     outline: none;
     padding: 10px;
     box-shadow: inset 0px 0px 3px #00000011;
-    
 `
 
 export const searchButton = css`
@@ -33,7 +32,6 @@ export const searchButton = css`
         background-color: #eeeeee;
     }
 `
-
 
 export const tableLayout = css`
     position: relative;
@@ -60,12 +58,18 @@ export const tableLayout = css`
 export const table = css`
     border-collapse: collapse;
     width: max-content;
+    font-size: 14px;
+
     & td, & th {
         border: 1px solid #dbdbdb;
+        padding: 0px 5px;
         cursor: default;
     }
     & th {
         border-top: none;
+    }
+    & td {
+        font-size: 12px;
     }
     & tr > td:nth-last-of-type(1),
     & tr > th:nth-last-of-type(1) {
@@ -75,35 +79,43 @@ export const table = css`
     & tr > td:nth-of-type(1) {
         border-left: none;
         text-align: center;
-        width: 30px;
+        min-width: 30px;
     }
     & tr > th:nth-of-type(2),
     & tr > td:nth-of-type(2) {
-        width: 80px;
+        min-width: 50px;
     }
+    & tr > td:nth-of-type(2) {
+        text-align: right;
+    }
+    
     & tr > th:nth-of-type(3),
     & tr > td:nth-of-type(3) {
-        width: 250px;
+        min-width: 250px;
     }
     & tr > th:nth-of-type(4),
     & tr > td:nth-of-type(4) {
-        width: 150px;
+        min-width: 100px;
     }
     & tr > th:nth-of-type(5),
     & tr > td:nth-of-type(5) {
-        width: 150px;
+        min-width: 80px;
     }
     & tr > th:nth-of-type(6),
     & tr > td:nth-of-type(6) {
-        width: 150px;
+        min-width: 80px;
     }
     & tr > th:nth-of-type(7),
     & tr > td:nth-of-type(7) {
-        width: 100px;
+        min-width: 60px;
     }
     & tr > th:nth-of-type(8),
     & tr > td:nth-of-type(8) {
-        width: 100px;
+        min-width: 100px;
+    }
+    & tr > th:nth-of-type(8),
+    & tr > td:nth-of-type(8) {
+        min-width: 80px;
     }
 
 `;
@@ -112,5 +124,10 @@ export const theadTr = css`
     position: sticky;
     top: 0;
     background-color: #fafafa;
+`;
+
+export const tbodyTr = (ischecked) => css`
+    top: 0;
+    background-color: ${ischecked ? "#eeeeee" : "white"};
 `;
 

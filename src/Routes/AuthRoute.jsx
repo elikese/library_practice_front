@@ -35,7 +35,7 @@ function AuthRoute(props) {
       retry: 0,
       refetchOnWindowFocus: false,
       onSuccess: response => {
-        console.log("서버통신");
+        console.log("권한체크");
       },
       onError: error => {
         console.log(error)
