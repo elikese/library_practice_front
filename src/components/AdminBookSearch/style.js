@@ -60,12 +60,17 @@ export const tableLayout = css`
 export const table = css`
     border-collapse: collapse;
     width: max-content;
+    font-size: 14px;
     & td, & th {
         border: 1px solid #dbdbdb;
+        padding: 0px 5px;
         cursor: default;
     }
     & th {
         border-top: none;
+    }
+    & td {
+        font-size: 12px;
     }
     & tr > td:nth-last-of-type(1),
     & tr > th:nth-last-of-type(1) {
@@ -75,35 +80,43 @@ export const table = css`
     & tr > td:nth-of-type(1) {
         border-left: none;
         text-align: center;
-        width: 30px;
+        min-width: 30px;
     }
     & tr > th:nth-of-type(2),
     & tr > td:nth-of-type(2) {
-        width: 80px;
+        min-width: 50px;
     }
+    & tr > td:nth-of-type(2) {
+        text-align: right;
+    }
+    
     & tr > th:nth-of-type(3),
     & tr > td:nth-of-type(3) {
-        width: 250px;
+        min-width: 250px;
     }
     & tr > th:nth-of-type(4),
     & tr > td:nth-of-type(4) {
-        width: 150px;
+        min-width: 150px;
     }
     & tr > th:nth-of-type(5),
     & tr > td:nth-of-type(5) {
-        width: 150px;
+        min-width: 100px;
     }
     & tr > th:nth-of-type(6),
     & tr > td:nth-of-type(6) {
-        width: 150px;
+        min-width: 100px;
     }
     & tr > th:nth-of-type(7),
     & tr > td:nth-of-type(7) {
-        width: 100px;
+        min-width: 60px;
     }
     & tr > th:nth-of-type(8),
     & tr > td:nth-of-type(8) {
-        width: 100px;
+        min-width: 100px;
+    }
+    & tr > th:nth-of-type(8),
+    & tr > td:nth-of-type(8) {
+        min-width: 100px;
     }
 
 `;

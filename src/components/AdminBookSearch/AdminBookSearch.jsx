@@ -6,6 +6,7 @@ import { useBookRegisterInput } from "../../hooks/useBookRegisterInput"
 import { useQuery } from "react-query";
 import { searchBooksRequest } from "../../apis/api/bookApi";
 import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
 
 function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
 
@@ -14,10 +15,13 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
   const selectedBookType = useReactSelect({ value: 0, label: "전체" });
   const selectedCategory = useReactSelect({ value: 0, label: "전체" });
   const selectedSearchType = useReactSelect({ value: 0, label: "전체" });
+  const [books, setBooks] = useState([]);
+  const [checkedBooksId, setCheckedBooksId] = useState([]);
 
   const searchBooksQuery = useQuery(
     ["searchBooksQuery", searchParams.get("page")],
     async () => await searchBooksRequest({
+      retry: 0,
       page: searchParams.get("page"),
       count: searchCount,
       bookTypeId: selectedBookType.option.value,
@@ -29,7 +33,8 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
       retry: 0,
       refetchOnWindowFocus: false,
       onSuccess: response => {
-        console.log(response);
+        setBooks(() => response.data);
+        console.log(books)
       },
     }
   );
@@ -65,7 +70,9 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
     })
   }
 
+  const handleCheckAll = () => {
 
+  }
 
   return (
     <div>
@@ -112,169 +119,26 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
               <th>ISBN</th>
               <th>도서형식</th>
               <th>카테고리</th>
+              <th>커버URL</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>bookId</td>
-              <td>bookName</td>
-              <td>authorName</td>
-              <td>publisherName</td>
-              <td>isbn</td>
-              <td>bookType</td>
-              <td>category</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>bookId</td>
-              <td>bookName</td>
-              <td>authorName</td>
-              <td>publisherName</td>
-              <td>isbn</td>
-              <td>bookType</td>
-              <td>category</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>bookId</td>
-              <td>bookName</td>
-              <td>authorName</td>
-              <td>publisherName</td>
-              <td>isbn</td>
-              <td>bookType</td>
-              <td>category</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>bookId</td>
-              <td>bookName</td>
-              <td>authorName</td>
-              <td>publisherName</td>
-              <td>isbn</td>
-              <td>bookType</td>
-              <td>category</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>bookId</td>
-              <td>bookName</td>
-              <td>authorName</td>
-              <td>publisherName</td>
-              <td>isbn</td>
-              <td>bookType</td>
-              <td>category</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>bookId</td>
-              <td>bookName</td>
-              <td>authorName</td>
-              <td>publisherName</td>
-              <td>isbn</td>
-              <td>bookType</td>
-              <td>category</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>bookId</td>
-              <td>bookName</td>
-              <td>authorName</td>
-              <td>publisherName</td>
-              <td>isbn</td>
-              <td>bookType</td>
-              <td>category</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>bookId</td>
-              <td>bookName</td>
-              <td>authorName</td>
-              <td>publisherName</td>
-              <td>isbn</td>
-              <td>bookType</td>
-              <td>category</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>bookId</td>
-              <td>bookName</td>
-              <td>authorName</td>
-              <td>publisherName</td>
-              <td>isbn</td>
-              <td>bookType</td>
-              <td>category</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>bookId</td>
-              <td>bookName</td>
-              <td>authorName</td>
-              <td>publisherName</td>
-              <td>isbn</td>
-              <td>bookType</td>
-              <td>category</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>bookId</td>
-              <td>bookName</td>
-              <td>authorName</td>
-              <td>publisherName</td>
-              <td>isbn</td>
-              <td>bookType</td>
-              <td>category</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>bookId</td>
-              <td>bookName</td>
-              <td>authorName</td>
-              <td>publisherName</td>
-              <td>isbn</td>
-              <td>bookType</td>
-              <td>category</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>bookId</td>
-              <td>bookName</td>
-              <td>authorName</td>
-              <td>publisherName</td>
-              <td>isbn</td>
-              <td>bookType</td>
-              <td>category</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>bookId</td>
-              <td>bookName</td>
-              <td>authorName</td>
-              <td>publisherName</td>
-              <td>isbn</td>
-              <td>bookType</td>
-              <td>category</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>bookId</td>
-              <td>bookName</td>
-              <td>authorName</td>
-              <td>publisherName</td>
-              <td>isbn</td>
-              <td>bookType</td>
-              <td>category</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>bookId</td>
-              <td>bookName</td>
-              <td>authorName</td>
-              <td>publisherName</td>
-              <td>isbn</td>
-              <td>bookType</td>
-              <td>category</td>
-            </tr>
+            {books && books.length > 0 && books.map(book => {
+              return (
+                <tr key={book.bookId}>
+                  <td><input type="checkbox" id={book.bookId} /></td>
+                  <td>{book.bookId}</td>
+                  <td>{book.bookName}</td>
+                  <td>{book.authorName}</td>
+                  <td>{book.publisherName}</td>
+                  <td>{book.isbn}</td>
+                  <td>{book.bookTypeName}</td>
+                  <td>{book.categoryName}</td>
+                  <td>{book.coverImgUrl}</td>
+                </tr>
+              );
+            })
+            }
           </tbody>
         </table>
       </div>
