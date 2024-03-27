@@ -19,7 +19,20 @@ function AdminBookSearchPageNumbers({ bookCount }) {
     }
 
     setNumbers(() => pageNumbers);
+    pageInputRef.current.value = "";
+    pageInputRef.current.focus();
   }, [bookCount, page])
+
+  const handleJumpPage = () => {
+    const inputPage = pageInputRef.current.value;
+    if(inputPage > maxPageNumber) {
+      alert(`마지막페이지는 ${maxPageNumber}페이지 입니다. 다시 입력해주세요`)
+      return;
+    }
+    setSearchParams({
+      page: inputPage
+    });
+  }
 
   return (
     <div css={s.layout}>
@@ -43,6 +56,7 @@ function AdminBookSearchPageNumbers({ bookCount }) {
           </Link>
         }
         {
+          page !== 1 &&
           <Link
             css={s.pageButton(false)}
             to={`/admin/book/management?page=${page - 1}`}
@@ -71,7 +85,7 @@ function AdminBookSearchPageNumbers({ bookCount }) {
           </Link>
         }
         {
-          page / 10 !== maxPageNumber / 10 &&
+          page < maxPageNumber - 9 &&
           <Link
             css={s.pageButton(false)}
             to={`/admin/book/management?page=${page + 10}`}
@@ -96,15 +110,13 @@ function AdminBookSearchPageNumbers({ bookCount }) {
             type="text"
             placeholder="이동할페이지입력"
             ref={pageInputRef}
-          // onKeyDown={(e) => {
-          //   if (e.target)
-          // }}
+            onKeyDown={({key}) => {
+              if (key === 'Enter') {
+                handleJumpPage();
+              }
+            }}
           />
-          <button
-            onClick={() => setSearchParams({
-              page: `${pageInputRef.current.value}`
-            })}
-          >
+          <button onClick={handleJumpPage}>
             이동
           </button>
         </div>

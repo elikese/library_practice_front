@@ -48,7 +48,7 @@ export const logout = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
+    margin: 0px 6px;
     border: none;
     border-radius: 50%;
     padding: 0;

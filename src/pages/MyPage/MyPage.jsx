@@ -56,7 +56,12 @@ function MyPage() {
                         </div>
                         <div css={s.infoBox}>
                             <div css={s.infoText}>사용자이름: {principalData?.data.username}</div>
-                            <div css={s.infoText}>이름: {principalData?.data.name}</div>
+                            <div css={s.infoText}>이름: {principalData?.data.name}
+                            { principalData?.data.authorities.filter(auth => auth.authority === "ROLE_ADMIN").length === 0
+                                        ? <></>
+                                        : " ( 🔐관리자 )"
+                            }
+                            </div>
                             <div css={s.emailBox}>
                                 <div css={s.infoText}>이메일: {principalData?.data.email}</div>
                                 {
@@ -64,15 +69,20 @@ function MyPage() {
                                         ? <button css={s.infoButton} onClick={handleSendAuthMailClick}>인증하기</button>
                                         : <div css={s.emailCheck}> <GoCheckCircleFill />인증완료 </div>
                                 }
+                            </div>
+                            <div css={s.infoButtonBox}>
+                                <button css={s.infoButton} onClick={() => navigate("/account/edit/password")}>정보 수정</button>
+                                <button css={s.infoButton} onClick={() => navigate("/account/edit/password")}>비밀번호 수정</button>
                                 {
                                     principalData?.data.authorities.filter(auth => auth.authority === "ROLE_ADMIN").length === 0
                                         ? <></>
-                                        : <Link to={"http://localhost:3000/admin/book/management?page=1"}></Link>
+                                        : 
+                                        <button 
+                                            css={s.infoButton} 
+                                            onClick={() => navigate("/admin/book/management?page=1")}>
+                                            🔐통합도서관리
+                                        </button>
                                 }
-                            </div>
-                            <div css={s.infoButtons}>
-                                <button css={s.infoButton} onClick={() => navigate("/account/edit/password")}>정보 수정</button>
-                                <button css={s.infoButton} onClick={() => navigate("/account/edit/password")}>비밀번호 수정</button>
                             </div>
                         </div>
                     </div>
