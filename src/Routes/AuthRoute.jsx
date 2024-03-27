@@ -48,7 +48,7 @@ function AuthRoute(props) {
       <RootHeader />
       <PageContainer>
         {
-          PrincipalQuery.isLoading
+          PrincipalQuery.isLoadingx
             ? <FullSizeLoader size={"30px"} />
             :
             <AnimatePresence>

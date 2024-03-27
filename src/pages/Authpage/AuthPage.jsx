@@ -14,12 +14,12 @@ function AuthPage() {
   const queryClient = useQueryClient();
   const principalData = queryClient.getQueriesData("PrincipalQuery");
 
-  useEffect(() => {
-    if (!!principalData) {
-      alert("잘못된 접근입니다!");
-      window.location.replace("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!!principalData) {
+  //     alert("잘못된 접근입니다!");
+  //     window.location.replace("/");
+  //   }
+  // }, []);
 
   return (
     <div css={s.layout}>
