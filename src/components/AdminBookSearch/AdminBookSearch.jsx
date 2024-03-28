@@ -61,7 +61,6 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
     {
       refetchOnWindowFocus: false,
       onSuccess: response => {
-        console.log(response);
       },
     }
   );
@@ -103,6 +102,7 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
   const handleCheckClick = (id) => {
     const newBooks = [...books].map(book => {
       if (book.bookId === id) {
+        setSelectedBook(() => book);
         return {
           ...book,
           checked: !book.checked
@@ -110,8 +110,10 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
       }
       return book;
     })
+    
     setBooks(() => newBooks)
     const lastCheckedBook = books.filter(book => book.bookId === id)[0];
+
     if (lastCheckedBook === null) {
       setSelectedBook(() => lastCheckedBook)
 
@@ -141,12 +143,27 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
   }
 
   useEffect(() => {
-    const newBooks = [...books].filter(book => book.checked === false)
-    if (newBooks.length !== 0) {
+    const uncheckedBooks = [...books].filter(book => book.checked === false)
+    if (uncheckedBooks.length !== 0) { // check & unckecked 섞인 경우
       checkAllBoxRef.current.checked = false;
     }
-    if (newBooks.length === 0) {
+    if (uncheckedBooks.length === 0) { // 모두 check 경우
       checkAllBoxRef.current.checked = true;
+    }
+    const checkedBooks = [...books].filter(book => book.checked === true);
+    if(checkedBooks.length === 0) { // 모두 uncheck 경우
+      setSelectedBook(() => ({
+        bookId: 0,
+        isbn: "",
+        bookTypeId: 0,
+        bookTypeName: "",
+        categoryId: 0,
+        categoryName: "",
+        bookName: "",
+        authorName: "",
+        publisherName: "",
+        coverImgUrl: ""
+      }));
     }
   }, [books])
 

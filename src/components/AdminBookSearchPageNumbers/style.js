@@ -40,7 +40,7 @@ export const pageCount = css`
     border-radius: 3px;
     font-size: 10px;
     cursor: default;
-    & > div:nth-of-type(1) {
+    & > div {
         border-bottom: 1px solid #dbdbdb
     }
     
@@ -48,20 +48,21 @@ export const pageCount = css`
 
 export const pageInputBox = css`
     position: relative;
+    padding-left: 1px;
     & > input {
-        margin-top: 5px;
         width: 140px;
         border: none;
         border-bottom: 1px solid #dbdbdb;
         outline: none;
-        font-size: 10px;
+        font-size: 9px;
         background-color: #fafafa;
     }
     & > button {
         position: absolute;
-        top: 3px;
+        top: 0px;
         right: 1px;
-        font-size: 10px;
+        height: 13px;
+        font-size: 9px;
         background-color: transparent;
         border: none;
         border-radius: 3px;

@@ -75,17 +75,19 @@ export const emailBox = css`
     & > div:nth-of-type(1) {
         margin: 0px 10px 0px 0px;
     }
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 `;
 
-export const infoButtons = css`
+export const infoButtonBox = css`
     box-sizing: border-box;
     display: flex;
     padding-top: 5px;
     & > button:nth-of-type(1) {
         margin-right: 5px;
     }
-
+    & > button:nth-of-type(2) {
+        margin-right: 5px;
+    }
 `;
 
 export const infoButton = css`
@@ -98,10 +100,10 @@ export const infoButton = css`
     cursor: pointer;
 
     &:hover{
-        background-color: #fafafa;
+        background-color: #eeeeee;
     }
     &:active{
-        background-color: #eeeeee;
+        background-color: #fafafa;
     }
 `;
 
