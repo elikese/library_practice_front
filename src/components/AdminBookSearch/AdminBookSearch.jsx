@@ -3,15 +3,15 @@ import Select from "react-select";
 import * as s from "./style";
 import { useReactSelect } from "../../hooks/useReactSelect";
 import { useBookRegisterInput } from "../../hooks/useBookRegisterInput"
-import { useQuery } from "react-query";
-import { getBookCountRequest, searchBooksRequest } from "../../apis/api/bookApi";
+import { useMutation, useQuery } from "react-query";
+import { deleteBooksRequest, getBookCountRequest, searchBooksRequest } from "../../apis/api/bookApi";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import AdminBookSearchPageNumbers from "../AdminBookSearchPageNumbers/AdminBookSearchPageNumbers";
 import { useRecoilState } from "recoil";
 import { selectedBookState } from "../../atoms/adminSelectedBookAtom";
 
-function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
+function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions, isDelete, setDelete }) {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const searchCount = 20;
@@ -26,7 +26,6 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
   const searchBooksQuery = useQuery(
     ["searchBooksQuery", page],
     async () => await searchBooksRequest({
-      retry: 0,
       page: page,
       count: searchCount,
       bookTypeId: selectedBookType.option.value,
@@ -51,7 +50,6 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
   const getBookCountQuery = useQuery(
     ["getBookCountQuery", searchBooksQuery.data],
     async () => await getBookCountRequest({
-      retry: 0,
       count: searchCount,
       bookTypeId: selectedBookType.option.value,
       categoryId: selectedCategory.option.value,
@@ -59,11 +57,30 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
       searchText: searchText.value
     }),
     {
+      retry: 0,
       refetchOnWindowFocus: false,
       onSuccess: response => {
       },
     }
   );
+
+  const deleteBooksMutation = useMutation({
+    mutationKey: "deleteBooksMutation",
+    mutationFn: deleteBooksRequest,
+    onSuccess: response => {
+      alert("삭제완료.");
+      window.location.replace("/admin/book/management?page=1");
+    }
+  });
+
+  useEffect(() => {
+    if (isDelete) {
+      const deleteBooks = books.filter(book => book.checked).map(book => book.bookId);
+      deleteBooksMutation.mutate(deleteBooks);
+    }
+    setDelete(() => false);
+  }, [isDelete]);
+
 
   const searchSubmit = () => {
     if (window.confirm(
@@ -110,26 +127,25 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
       }
       return book;
     })
-    
     setBooks(() => newBooks)
-    const lastCheckedBook = books.filter(book => book.bookId === id)[0];
+    // const lastCheckedBook = books.filter(book => book.bookId === id)[0];
 
-    if (lastCheckedBook === null) {
-      setSelectedBook(() => lastCheckedBook)
+    // if (lastCheckedBook === null) {
+    //   setSelectedBook(() => lastCheckedBook)
+    // }
 
-    }
-    setSelectedBook(() => ({
-      bookId: 0,
-      isbn: "",
-      bookTypeId: 0,
-      bookTypeName: "",
-      categoryId: 0,
-      categoryName: "",
-      bookName: "",
-      authorName: "",
-      publisherName: "",
-      coverImgUrl: ""
-    }));
+    // setSelectedBook(() => ({
+    //   bookId: 0,
+    //   isbn: "",
+    //   bookTypeId: 0,
+    //   bookTypeName: "",
+    //   categoryId: 0,
+    //   categoryName: "",
+    //   bookName: "",
+    //   authorName: "",
+    //   publisherName: "",
+    //   coverImgUrl: ""
+    // }));
   }
 
   const handleCheckAllClick = () => {
@@ -151,7 +167,7 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
       checkAllBoxRef.current.checked = true;
     }
     const checkedBooks = [...books].filter(book => book.checked === true);
-    if(checkedBooks.length === 0) { // 모두 uncheck 경우
+    if (checkedBooks.length === 0) { // 모두 uncheck 경우
       setSelectedBook(() => ({
         bookId: 0,
         isbn: "",

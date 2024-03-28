@@ -11,3 +11,11 @@ export const searchBooksRequest = async (params) => {
 export const getBookCountRequest = async (params) => {
   return await instance.get("/admin/books/count", { params });
 }
+
+export const deleteBooksRequest = async (data) => {
+  return await instance.delete("/admin/books", { data });
+}
+
+export const updateBookRequest = async (data) => {
+  return await instance.put(`/admin/book/${data.bookId}`, data);
+}

@@ -10,10 +10,15 @@ const inputBox = css`
   padding: 0px 10px;
   width: 100%;
   height: 100%;
+  &:disabled {
+    background-color: white;
+    cursor: no-drop;
+    color: #666666;
+  }
 `
 
 const BookRegisterInput = forwardRef((props, ref) => {
-  const { value, onChange, onKeyDown } = props;
+  const { value, onChange, onKeyDown, isDisabled } = props;
   return (
     <input
       css={inputBox}
@@ -22,6 +27,7 @@ const BookRegisterInput = forwardRef((props, ref) => {
       onChange={onChange}
       onKeyDown={onKeyDown}
       ref={ref}
+      disabled={isDisabled}
     />
   );
 });
