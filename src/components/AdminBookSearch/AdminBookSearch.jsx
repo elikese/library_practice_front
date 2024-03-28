@@ -112,7 +112,6 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
     })
     setBooks(() => newBooks)
     const lastCheckedBook = books.filter(book => book.bookId === id)[0];
-
     if (lastCheckedBook === null) {
       setSelectedBook(() => lastCheckedBook)
 
