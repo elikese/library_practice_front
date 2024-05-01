@@ -5,7 +5,7 @@ function BookModal(props) {
     return (
         <div css={s.layout}>
             <div css={s.modalLayout}>
-                테스트
+                
             </div>
         </div>
     );

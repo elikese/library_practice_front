@@ -73,7 +73,13 @@ function RootSideMenuLeft() {
                 }
             </div>
             <div css={s.menuList}>
-                <Link css={s.menuLink}>
+                <Link css={s.menuLink} to={"/user/book/rank"} onClick={() => setShow(() => false)}>
+                    도서 랭크
+                </Link>
+                <Link css={s.menuLink} to={"/user/book/review"} onClick={() => setShow(() => false)}>
+                    도서 리뷰
+                </Link>
+                <Link css={s.menuLink} to={"/user/book/search"} onClick={() => setShow(() => false)}>
                     도서 검색
                 </Link>
             </div>

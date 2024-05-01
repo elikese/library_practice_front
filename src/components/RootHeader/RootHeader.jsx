@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useQueryClient } from "react-query";
 import instance from "../../apis/utils/instance";
+import { requestForFCMToken } from "../../apis/firebase/config/firebaseConfig";
 
 function RootHeader() {
     const [show, setShow] = useRecoilState(menuState);
@@ -17,56 +18,54 @@ function RootHeader() {
 
     useEffect(() => {
         setLogin(() => principalQueryState.status === "success");
+        console.log("바뀌나?");
+        if (principalQueryState.status === "success") {
+            requestForFCMToken();
+        }
     }, [principalQueryState.status]);
-
 
     const handleOpenClick = (e) => {
         e.stopPropagation();
         setShow(() => true);
-    }
+    };
 
     const handleLogoutClick = () => {
-        localStorage.removeItem("AccessToken")
+        localStorage.removeItem("AccessToken");
         instance.interceptors.request.use((config) => {
             config.headers.Authorization = null;
             return config;
         });
         queryClient.refetchQueries("PrincipalQuery");
         window.location.replace("/auth/signin");
-    }
-
+    };
 
     return (
         <div css={s.header}>
             <button css={s.menuButton} onClick={handleOpenClick}>
                 <HiMenu />
             </button>
-            {
-                !isLogin
-                    ? (
-                        <div css={s.accountItems}>
-                            <Link css={s.account} to={"/"}>
-                                <FiHome />
-                            </Link>
-                            <Link css={s.account} to={"/auth/signin"}>
-                                <FiUser />
-                            </Link>
-                        </div>
-                    )
-                    : (
-                        <div css={s.accountItems}>
-                            <button css={s.logout} onClick={handleLogoutClick}>
-                                <FiLogOut />
-                            </button>
-                            <Link css={s.account} to={"/"}>
-                                <FiHome />
-                            </Link>
-                            <Link css={s.account} to={"/account/mypage"}>
-                                <FiUser />
-                            </Link>
-                        </div>
-                    )
-            }
+            {!isLogin ? (
+                <div css={s.accountItems}>
+                    <Link css={s.account} to={"/"}>
+                        <FiHome />
+                    </Link>
+                    <Link css={s.account} to={"/auth/signin"}>
+                        <FiUser />
+                    </Link>
+                </div>
+            ) : (
+                <div css={s.accountItems}>
+                    <button css={s.logout} onClick={handleLogoutClick}>
+                        <FiLogOut />
+                    </button>
+                    <Link css={s.account} to={"/"}>
+                        <FiHome />
+                    </Link>
+                    <Link css={s.account} to={"/account/mypage"}>
+                        <FiUser />
+                    </Link>
+                </div>
+            )}
         </div>
     );
 }

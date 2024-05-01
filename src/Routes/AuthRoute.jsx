@@ -12,6 +12,8 @@ import PageContainer from '../components/PageContainer/PageContainer';
 import { AnimatePresence } from 'framer-motion';
 import PasswordEditPage from '../pages/PasswordEditPage/PasswordEditPage';
 import BookManagement from '../pages/Admin/BookManagement/BookManagement';
+import BooKRankPage from '../pages/BookRankPage/BooKRankPage';
+import BookSearchPage from '../pages/BookSearchPage/BookSearchPage';
 
 
 // useQuery => GET 요청시 사용
@@ -58,6 +60,9 @@ function AuthRoute(props) {
                 <Route path='/account/mypage' element={<MyPage />} />
                 <Route path='/account/edit/password' element={<PasswordEditPage />} />
                 <Route path='/admin/book/management' element={<BookManagement />} />
+                <Route path='/user/book/rank' element={<BooKRankPage />} />
+                <Route path='/user/book/review' element={<></>} />
+                <Route path='/user/book/search' element={<BookSearchPage />} />
               </Routes>
             </AnimatePresence>
         }

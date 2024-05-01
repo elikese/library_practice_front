@@ -26,7 +26,10 @@ function AdminBookSearchPageNumbers({ bookCount }) {
   const handleJumpPage = () => {
     const inputPage = pageInputRef.current.value;
     if(inputPage > maxPageNumber) {
-      alert(`마지막페이지는 ${maxPageNumber}페이지 입니다. 다시 입력해주세요`)
+      alert(`마지막페이지는 ${maxPageNumber}페이지 입니다. 다시 력해주세요`)
+      return;
+    } else if(inputPage < 1) {
+      alert(`페이지는 0이하일 수 없습니다. 입력하신 페이지: ${inputPage}페이지`);
       return;
     }
     setSearchParams({

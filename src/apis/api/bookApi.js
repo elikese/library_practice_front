@@ -19,3 +19,7 @@ export const deleteBooksRequest = async (data) => {
 export const updateBookRequest = async (data) => {
   return await instance.put(`/admin/book/${data.bookId}`, data);
 }
+
+export const searchBooksByUserRequest = async (params) => {
+  return await instance.get("/user/books", { params });
+}
